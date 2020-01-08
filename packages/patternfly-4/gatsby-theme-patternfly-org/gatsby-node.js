@@ -4,6 +4,8 @@ const { extractExamples } = require('./helpers/extractExamples');
 const { extractTableOfContents } = require('./helpers/extractTableOfContents');
 const { createHandlebars } = require('./helpers/createHandlebars');
 const { slugger } = require('./helpers/slugger');
+const optimizely = require('./optimizely');
+const { optimizelyClientInstance, createFeatureFlag } = optimizely;
 
 // Add map PR-related environment variables to GraphQL
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -183,6 +185,10 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hiddenTitles = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
     const { showBanner = false, showGdprBanner = false } = pluginOptions;
+    
+    // Get all enabled feature flags
+    // https://docs.developers.optimizely.com/rollouts/docs/get-enabled-features-javascript-node
+    const activeFeatureFlags = optimizelyClientInstance.getEnabledFeatures('pfuser');
     // Create 404 page
     actions.createPage({
       path: '/404',
@@ -217,9 +223,13 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         const designNode = result.data.designSnippets.nodes.find(
           node => node.frontmatter[`${source}ComponentName`] === componentName
         );
+
+        // Check if feature flag is enabled
+        const flagName = node.fields.title.toLowerCase().split(' ').join('_');
+        const featureEnabled = activeFeatureFlags.includes(flagName);
         
         // Create our dynamic templated pages
-        actions.createPage({
+        featureEnabled && actions.createPage({
           path: slug,
           component: node.absolutePath || path.resolve(__dirname, `./templates/mdx.js`),
           context: {
@@ -346,3 +356,7 @@ exports.onCreateWebpackConfig = ({ actions, stage, getConfig }) => {
 
   actions.replaceWebpackConfig(config);
 };
+
+// Create feature flag when matching flag is not found
+// https://developers.optimizely.com/x/rest/v2/#create-a-feature
+
