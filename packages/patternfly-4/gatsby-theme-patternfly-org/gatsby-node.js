@@ -5,7 +5,7 @@ const { extractTableOfContents } = require('./helpers/extractTableOfContents');
 const { createHandlebars } = require('./helpers/createHandlebars');
 const { slugger } = require('./helpers/slugger');
 const optimizely = require('./optimizely');
-const { optimizelyClientInstance, createFeatureFlag } = optimizely;
+const { optimizelyDevInstance, optimizelyProdInstance, createFeatureFlag } = optimizely;
 
 // Add map PR-related environment variables to GraphQL
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -188,7 +188,9 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     
     // Get all enabled feature flags
     // https://docs.developers.optimizely.com/rollouts/docs/get-enabled-features-javascript-node
-    const activeFeatureFlags = optimizelyClientInstance.getEnabledFeatures('pfuser');
+    const activeDevFlags = optimizelyDevInstance.getEnabledFeatures('pfuser');
+    const activeProdFlags = optimizelyProdInstance.getEnabledFeatures('pfuser');
+
     // Create 404 page
     actions.createPage({
       path: '/404',
@@ -224,9 +226,14 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
           node => node.frontmatter[`${source}ComponentName`] === componentName
         );
 
-        // Check if feature flag is enabled
+        // Check if feature flag is enabled - testing w/Dev for Core and Prod for React
         const flagName = node.fields.title.toLowerCase().split(' ').join('_');
-        const featureEnabled = activeFeatureFlags.includes(flagName);
+        // const featureEnabled = activeFeatureFlags.includes(flagName);
+        const featureEnabled = (source === 'core')
+          ? activeDevFlags.includes(flagName)
+          : (source === 'react')
+            ? activeProdFlags.includes(flagName)
+            : true;
         
         // Create our dynamic templated pages
         featureEnabled && actions.createPage({
@@ -257,7 +264,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         });
 
         // Create per-example fullscreen pages for documentation pages
-        if (['core', 'react'].includes(source)) {
+        if (featureEnabled && ['core', 'react'].includes(source)) {
           Object.entries(examples).forEach(([key, example]) => {
             const pagePath = `${slug}/${key}`;
             fullscreenPages[pagePath] = true;

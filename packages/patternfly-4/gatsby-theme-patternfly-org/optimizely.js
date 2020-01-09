@@ -2,11 +2,19 @@ const optimizelySDK = require('@optimizely/optimizely-sdk');
 
 // console logging for SDK processes
 // https://docs.developers.optimizely.com/rollouts/docs/customize-logger-javascript-node
-optimizelySDK.setLogLevel('error', 'warning');
+optimizelySDK.setLogLevel('warning');
 optimizelySDK.setLogger(optimizelySDK.logging.createLogger())
 
-const optimizelyClientInstance = optimizelySDK.createInstance({
+const optimizelyDevInstance = optimizelySDK.createInstance({
   sdkKey: 'F4nG4qT7a98DzHLTZN8zyx',
+  datafileOptions: {
+    autoUpdate: true,
+    updateInterval: 1000,  // 1 second in milliseconds
+  },
+});
+
+const optimizelyProdInstance = optimizelySDK.createInstance({
+  sdkKey: '6DvBTLhgH6a7GZxdA7B27R',
   datafileOptions: {
     autoUpdate: true,
     updateInterval: 1000,  // 1 second in milliseconds
@@ -55,6 +63,7 @@ const createFeatureFlag = flagName => {
 }
 
 module.exports = {
-  optimizelyClientInstance,
+  optimizelyDevInstance,
+  optimizelyProdInstance,
   createFeatureFlag
 };
