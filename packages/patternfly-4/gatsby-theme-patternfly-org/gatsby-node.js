@@ -5,7 +5,12 @@ const { extractTableOfContents } = require('./helpers/extractTableOfContents');
 const { createHandlebars } = require('./helpers/createHandlebars');
 const { slugger } = require('./helpers/slugger');
 const optimizely = require('./optimizely');
-const { optimizelyDevInstance, optimizelyProdInstance, createFeatureFlag } = optimizely;
+const {
+  optlyProdReactInstance,
+  optlyProdCoreInstance,
+  optlyStagingReactInstance,
+  optlyStagingCoreInstance
+} = optimizely;
 
 // Add map PR-related environment variables to GraphQL
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -188,8 +193,10 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     
     // Get all enabled feature flags
     // https://docs.developers.optimizely.com/rollouts/docs/get-enabled-features-javascript-node
-    const activeDevFlags = optimizelyDevInstance.getEnabledFeatures('pfuser');
-    const activeProdFlags = optimizelyProdInstance.getEnabledFeatures('pfuser');
+    const activeProdReactFlags = optlyProdReactInstance.getEnabledFeatures('pfuser');
+    const activeProdCoreFlags = optlyProdCoreInstance.getEnabledFeatures('pfuser');
+    const activeStagingReactFlags = optlyStagingReactInstance.getEnabledFeatures('pfuser');
+    const activeStagingCoreFlags = optlyStagingCoreInstance.getEnabledFeatures('pfuser');
 
     // Create 404 page
     actions.createPage({
@@ -230,10 +237,14 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         const flagName = node.fields.title.toLowerCase().split(' ').join('_');
         // const featureEnabled = activeFeatureFlags.includes(flagName);
         const featureEnabled = (source === 'core')
-          ? activeDevFlags.includes(flagName)
+          ? activeProdCoreFlags.includes(flagName)
           : (source === 'react')
-            ? activeProdFlags.includes(flagName)
+            ? activeProdReactFlags.includes(flagName)
             : true;
+
+        if (flagName === 'alert') {
+          console.log('ALERT: ', source, featureEnabled);
+        }
         
         // Create our dynamic templated pages
         featureEnabled && actions.createPage({
