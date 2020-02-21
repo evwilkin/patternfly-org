@@ -412,3 +412,7 @@ p ~ .ws-toc {
     top: calc(70vh / 2) !important;
   }
 }
+
+.ws-improve-docs {
+  margin-bottom: 16px;
+}

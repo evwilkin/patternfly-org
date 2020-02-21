@@ -5,6 +5,7 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import {
   Alert,
   Badge,
+  Button,
   Card,
   CardHeader,
   CardBody,
@@ -226,12 +227,37 @@ const MDXTemplate = ({ data, location, pageContext }) => {
     return (
       <React.Fragment>
         <AutoLinkHeader id="feedback" size="h2" className="ws-h2">
-          Feedback
+          Contribute to this documentation
         </AutoLinkHeader>
-        <a href={sourceLink} target="_blank">View page source on Github</a> / <a href={issueLink} target="_blank">Report an issue on Github</a>
+        <p className="ws-improve-docs">Have a way to improve this doc? It's easy to open an issue.</p>
+        <Button
+          component="a"
+          href={issueLink}
+          target="_blank"
+          variant="secondary"
+        >
+          Open an issue
+        </Button>
+        <Button
+          component="a"
+          href={sourceLink}
+          target="_blank"
+          variant="link"
+        >
+          View source file
+        </Button>
       </React.Fragment>
     );
   }
+
+  const showFeedbackSection = (() => {
+    const hiddenPages = {
+      sources: ['contribute'],
+      titles: ['About PatternFly']
+    };
+
+    return sourceLink && !hiddenPages.sources.includes(source) && !hiddenPages.titles.includes(title);
+  })();
 
   return (
     <React.Fragment>
@@ -252,7 +278,7 @@ const MDXTemplate = ({ data, location, pageContext }) => {
 
           {props.length > 0 && <PropsSection />}
           {cssPrefix && <CSSVariablesSection />}
-          {/* {sourceLink && <FeedbackSection />} */}
+          {showFeedbackSection && <FeedbackSection />}
         </PageSection>
       </SideNavLayout>
     </React.Fragment>
