@@ -63,6 +63,8 @@ const annotations = [
   },
 ];
 
+let isBetaPropUsed = false;
+
 function addAnnotations(prop) {
   // Prop looks like this: {
   //   "beta": null,
@@ -82,7 +84,13 @@ function addAnnotations(prop) {
     annotations.forEach(({ regex, name }) => {
       const match = prop.description.match(regex);
       if (match) {
-        console.log(prop.description.replace(regex, ''))
+        // only show 1 beta props warning
+        if (match[0] === '@beta' && !isBetaPropUsed) {
+          isBetaPropUsed = true;
+          console.log('NOTE: Beta property currently under review is used, note that this could potentially be susceptible to changes.')
+        } else {
+          console.log(prop.description.replace(regex, ''));
+        }
         prop.description = prop.description.replace(regex, '').trim();
         prop[name] = match[2] || match[1] || true;
       }
