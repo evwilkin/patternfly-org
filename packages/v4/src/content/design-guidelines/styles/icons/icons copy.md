@@ -5,7 +5,8 @@ section: styles
 import { Button, Divider, Grid, GridItem } from '@patternfly/react-core';
 import { CheckCircleIcon, TimesCircleIcon, FilterIcon } from '@patternfly/react-icons';
 import { Icons } from 'gatsby-theme-patternfly-org/components/icons/icons';
-import { IconRecommendations } from './icons.js';
+import { IconRecommendations } from './IconRecommendations';
+import { IconsTable } from './IconsTable';
 import './icons.css';
 
 <Divider className="ws-icons-divider" />
@@ -81,7 +82,8 @@ import './icons.css';
 If you're looking to copy React for an icon:
 Use this for 'pficon' icons: <code>import { [insert-icon-name] } from \'@patternfly\/react-icons\'</code>
 
-<Icons />
+<!-- <Icons /> -->
+<IconsTable />
 
 <Divider className="ws-icons-divider" />
 
