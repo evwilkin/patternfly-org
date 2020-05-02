@@ -69,10 +69,7 @@ export class IconsTable extends React.Component {
     const { searchValue, columns, sortBy } = this.state;
     const { direction, index } = sortBy;
     const searchRE = new RegExp(searchValue, 'i');
-    const filteredIcons = commonIcons.filter(c => {
-      return searchRE.test(c[0]);
-    });
-    let rows = filteredIcons.map(([id, Icon]) => {
+    const iconRows = commonIcons.map(([id, Icon]) => {
       const name = paramCase(id.slice(0, -4));
       return {
         cells: [
@@ -107,11 +104,17 @@ export class IconsTable extends React.Component {
         ]
       }
     });
+
+    let filteredRows = iconRows.filter(row => {
+      return row.cells.some(cell => {
+        return typeof cell.title === 'string' && searchRE.test(cell.title);
+      })
+    })
+
     if (direction) {
-      const sortedRows = rows.sort((a, b) => (a[index] < b[index] ? -1 : a[index] > b[index] ? 1 : 0));
-      rows = direction === SortByDirection.asc ? sortedRows : sortedRows.reverse();
+      const sortedRows = filteredRows.sort((a, b) => (a[index] < b[index] ? -1 : a[index] > b[index] ? 1 : 0));
+      filteredRows = direction === SortByDirection.asc ? sortedRows : sortedRows.reverse();
     }
-    console.log('rows: ', rows);
     
     return (
       <React.Fragment>
@@ -132,13 +135,13 @@ export class IconsTable extends React.Component {
           sortBy={sortBy}
           onSort={this.onSort}
           cells={columns}
-          rows={rows}
+          rows={filteredRows}
         >
           <TableHeader />
           <TableBody />
         </Table>
 
-        {filteredIcons.length === 0 && (
+        {filteredRows.length === 0 && (
           <EmptyState variant={EmptyStateVariant.full}>
             <EmptyStateIcon icon={icons.SearchIcon}/>
             <Title headingLevel="h5" size="2xl">
