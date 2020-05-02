@@ -25,29 +25,29 @@ import './icons.css';
     <Button variant="link" icon={<FilterIcon size="lg" />}></Button>
     <p>Medium icons are used as our base size across our system as a whole and we recommend using this base size within your applications. Small, large and x-large icons are used sparingly across PatternFly components. Here is a full complete list of icon sizes:</p>
     <Grid gutter="md">
-      <GridItem sm="2"><FilterIcon size="sm" /></GridItem>
-      <GridItem sm="10">
+      <GridItem sm={2}><FilterIcon size="sm" /></GridItem>
+      <GridItem sm={10}>
         <Grid>
           <GridItem>Small (10px)</GridItem>
           <GridItem><code>-pf-global-icon-FonSize-sm</code></GridItem>
         </Grid>
       </GridItem>
-      <GridItem sm="2"><FilterIcon size="md" /></GridItem>
-      <GridItem sm="10">
+      <GridItem sm={2}><FilterIcon size="md" /></GridItem>
+      <GridItem sm={10}>
         <Grid>
           <GridItem>Medium (18px)</GridItem>
           <GridItem><code>-pf-global-icon-FonSize-md</code></GridItem>
         </Grid>
       </GridItem>
-      <GridItem sm="2"><FilterIcon size="lg" /></GridItem>
-      <GridItem sm="10">
+      <GridItem sm={2}><FilterIcon size="lg" /></GridItem>
+      <GridItem sm={10}>
         <Grid>
           <GridItem>Large (24px)</GridItem>
           <GridItem><code>-pf-global-icon-FonSize-lg</code></GridItem>
         </Grid>
       </GridItem>
-      <GridItem sm="2"><FilterIcon size="xl" /></GridItem>
-      <GridItem sm="10">
+      <GridItem sm={2}><FilterIcon size="xl" /></GridItem>
+      <GridItem sm={10}>
         <Grid>
           <GridItem>X-large (54px)</GridItem>
           <GridItem><code>-pf-global-icon-FonSize-xl</code></GridItem>

@@ -1111,22 +1111,6 @@ export const iconRecommendations = [
   [
     {
       style: "",
-      iconName: "pf-icon-spinner",
-      type: "",
-      iconUsage: "",
-      iconType: "old"
-    },
-    {
-      style: "",
-      iconName: "pf-icon-spinner",
-      type: "",
-      iconUsage: "Indicates data is loading",
-      iconType: "new"
-    }
-  ],
-  [
-    {
-      style: "",
       iconName: "pficon-dragdrop",
       type: "",
       iconUsage: "Indicates the ability to drag/drop an item",
