@@ -25,7 +25,7 @@ let commonIcons = allIcons.filter(([name]) => {
   const hyphenName = paramCase(name.slice(0, -4));
   return Boolean(coreIcons[hyphenName]);
 });
-console.log('commonIcons: ', commonIcons);
+
 commonIcons = commonIcons.sort((a , b) => {
   return a[0] > b[0] ? 1 : -1;
 });
