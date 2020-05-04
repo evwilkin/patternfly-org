@@ -80,7 +80,7 @@ import './icons.css';
 <small>Note: Be sure to read <a href="/get-started/developers#using-styles" className="pf-m-link">how to get started with icons</a> when using 'fa' regular icons</small>
 
 If you're looking to copy React for an icon:
-Use this for 'pficon' icons: <code>import { [insert-icon-name] } from \'@patternfly\/react-icons\'</code>
+Use this for 'pficon' icons: <code>import { [insert-icon-name] } from '@patternfly/react-icons'</code>
 
 <!-- <Icons /> -->
 <IconsTable />
