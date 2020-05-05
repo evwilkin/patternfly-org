@@ -19,6 +19,7 @@ import {
   sortable,
   SortByDirection
 } from '@patternfly/react-table';
+import { iconsData } from './iconsData';
 
 const allIcons = Object.entries(icons).filter(([name]) => name.endsWith('Icon'));
 let commonIcons = allIcons.filter(([name]) => {
@@ -71,6 +72,16 @@ export class IconsTable extends React.Component {
     const searchRE = new RegExp(searchValue, 'i');
     const iconRows = commonIcons.map(([id, Icon]) => {
       const name = paramCase(id.slice(0, -4));
+      console.log(id, iconsData, iconsData[id]);
+      const style = iconsData[id]
+        ? iconsData[id].style
+        : '';
+      const type = iconsData[id]
+        ? iconsData[id].type
+        : '';
+      const usage = iconsData[id]
+        ? iconsData[id].usage
+        : '';
       return {
         cells: [
           {
@@ -86,11 +97,11 @@ export class IconsTable extends React.Component {
             props: { column: 'Name' }
           },
           {
-            title: ( '' ),
+            title: ( style ),
             props: { column: 'Style'}
           },
           {
-            title: ( '' ),
+            title: ( type ),
             props: { column: 'Type' }
           },
           {
@@ -98,7 +109,7 @@ export class IconsTable extends React.Component {
             props: { column: 'React'}
           },
           {
-            title: ( '' ),
+            title: ( usage ),
             props: { column: 'Contextual usage' }
           }
         ]
