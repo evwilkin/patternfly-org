@@ -72,6 +72,7 @@ export class IconCard extends React.Component {
   onDownloadSvg = () => {
     const { name } = this.props;
     const domNode = ReactDOM.findDOMNode(this.iconRef.current);
+    console.log(name, domNode);
     domNode.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     domNode.setAttribute("width", "100%");
     domNode.setAttribute("height", "100%");

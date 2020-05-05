@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {
   Form, 
   TextInput, 
@@ -7,6 +8,8 @@ import {
   EmptyStateVariant, 
   EmptyStateIcon, 
   EmptyStateBody,
+  Tooltip,
+  TooltipPosition
 } from '@patternfly/react-core';
 import * as icons from '@patternfly/react-icons';
 import paramCase from 'param-case';
@@ -16,10 +19,12 @@ import {
   Table,
   TableHeader,
   TableBody,
+  TableVariant,
   sortable,
   SortByDirection
 } from '@patternfly/react-table';
 import { iconsData } from './iconsData';
+import { saveAs } from 'file-saver';
 
 const allIcons = Object.entries(icons).filter(([name]) => name.endsWith('Icon'));
 let commonIcons = allIcons.filter(([name]) => {
@@ -66,13 +71,29 @@ export class IconsTable extends React.Component {
     });
   }
 
+  onDownloadSvg = ({ currentTarget }) => {
+    const domNode = currentTarget.cloneNode(true);
+    domNode.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    domNode.setAttribute("width", "100%");
+    domNode.setAttribute("height", "100%");
+    const { outerHTML } = domNode;
+    const preface = '<?xml version="1.0" standalone="no"?>\r\n';
+    const name = currentTarget.parentElement.nextSibling.textContent;
+    const filename = `${name}.svg`;
+
+    const blob = new Blob([preface, outerHTML], {
+      type: 'image/svg+xml;charset=utf-8'
+    });
+
+    saveAs(blob, filename);
+  };
+
   render() {
     const { searchValue, columns, sortBy } = this.state;
     const { direction, index } = sortBy;
     const searchRE = new RegExp(searchValue, 'i');
     const iconRows = commonIcons.map(([id, Icon]) => {
       const name = paramCase(id.slice(0, -4));
-      console.log(id, iconsData, iconsData[id]);
       const style = iconsData[id]
         ? iconsData[id].style
         : '';
@@ -86,9 +107,9 @@ export class IconsTable extends React.Component {
         cells: [
           {
             title: (
-              <React.Fragment>
-                <Icon />
-              </React.Fragment>
+              <Tooltip content="Download SVG" position={TooltipPosition.bottom}>
+                <Icon onClick={this.onDownloadSvg} />
+              </Tooltip>
             ),
             props: { column: 'Icon'}
           },
@@ -129,17 +150,21 @@ export class IconsTable extends React.Component {
     
     return (
       <React.Fragment>
-        <Form className="ws-content-search-icons" onSubmit={event => { event.preventDefault(); return false; }}>
-          <TextInput
-            type="text"
-            id="primaryIconsSearch"
-            name="primaryIconsSearch"
-            placeholder="Search Icons"
-            aria-label="Search Icons"
-            value={searchValue}
-            onChange={this.handleSearchChange}
-          />
-        </Form>
+        <div>
+          <Form className="ws-content-search-icons" onSubmit={event => { event.preventDefault(); return false; }}>
+            <TextInput
+              type="text"
+              id="primaryIconsSearch"
+              name="primaryIconsSearch"
+              placeholder="Search Icons"
+              aria-label="Search Icons"
+              value={searchValue}
+              onChange={this.handleSearchChange}
+            />
+          </Form>
+
+          {filteredRows.length} items
+        </div>
 
         <Table
           aria-label="Sortable Table"
@@ -147,6 +172,7 @@ export class IconsTable extends React.Component {
           onSort={this.onSort}
           cells={columns}
           rows={filteredRows}
+          variant={TableVariant.compact}
         >
           <TableHeader />
           <TableBody />
