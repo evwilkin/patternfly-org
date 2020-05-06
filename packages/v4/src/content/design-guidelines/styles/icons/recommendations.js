@@ -1,4 +1,6 @@
-export const iconRecommendations = [
+import React from 'react';
+
+const recommendationsArray = [
   [
     {
       style: "",
@@ -322,7 +324,7 @@ export const iconRecommendations = [
       iconName: "pficon-settings",
       type: "",
       iconUsage: "",
-      iconType: "new"
+      iconType: "old"
     },
     {
       style: "fas",
@@ -560,7 +562,7 @@ export const iconRecommendations = [
       iconName: "pficon-key",
       type: "",
       iconUsage: "Used to reference an SSH key or something similar",
-      iconType: "new"
+      iconType: "old"
     },
     {
       style: "fas",
@@ -1033,9 +1035,14 @@ export const iconRecommendations = [
       type: "",
       iconUsage: "Open in a new tab or window",
       iconType: "old"
-    }
-  ],
-  [
+    },
+    {
+      style: "",
+      iconName: "pficon-applications",
+      type: "",
+      iconUsage: "",
+      iconType: "old"
+    },
     {
       style: "far",
       iconName: "window-restore",
@@ -1132,3 +1139,21 @@ export const iconRecommendations = [
     }
   ]
 ];
+
+export const iconRecommendations = recommendationsArray.map(recGroup => (
+  recGroup.reduce((acc, cur) => {
+    acc[cur.iconType].push({
+      name: cur.iconName,
+      icon: <div>{cur.iconName}</div>,
+      style: cur.style
+    });
+    if (cur.iconType === 'new') {
+      acc['iconUsage'].push(<div>{cur.iconUsage}</div>);
+    }
+    return acc;
+  }, {
+    old: [],
+    new: [],
+    iconUsage: []
+  })
+))
