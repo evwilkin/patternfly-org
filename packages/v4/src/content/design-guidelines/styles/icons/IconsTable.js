@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   Form, 
   TextInput, 
@@ -50,7 +49,7 @@ export class IconsTable extends React.Component {
       'Style',
       { title: 'Type', transforms: [sortable] },
       'React',
-      'Contextual usage'
+      { title: 'Contextual usage', transforms: [sortable] }
     ],
     sortBy: {}
   };
@@ -63,6 +62,7 @@ export class IconsTable extends React.Component {
   };
 
   onSort = (_event, index, direction) => {
+    console.log(_event, index, direction);
     this.setState({
       sortBy: {
         index,
@@ -144,7 +144,11 @@ export class IconsTable extends React.Component {
     })
 
     if (direction) {
-      const sortedRows = filteredRows.sort((a, b) => (a[index] < b[index] ? -1 : a[index] > b[index] ? 1 : 0));
+      const sortedRows = filteredRows.sort((a, b) => (
+        a.cells[index].title < b.cells[index].title
+          ? -1
+          : a.cells[index].title > b.cells[index].title
+            ? 1 : 0));
       filteredRows = direction === SortByDirection.asc ? sortedRows : sortedRows.reverse();
     }
     
