@@ -5,3 +5,9 @@
 .ws-icon-recommendations tbody {
   vertical-align: top;
 }
+
+#ws-icons-recommendations i {
+  width: 26px;
+  display: inline-block;
+  padding-right: 8px;
+}

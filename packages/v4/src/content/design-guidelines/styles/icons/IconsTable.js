@@ -177,6 +177,7 @@ export class IconsTable extends React.Component {
           cells={columns}
           rows={filteredRows}
           variant={TableVariant.compact}
+          id="ws-icons-table"
         >
           <TableHeader />
           <TableBody />

@@ -1144,7 +1144,7 @@ export const iconRecommendations = recommendationsArray.map(recGroup => (
   recGroup.reduce((acc, cur) => {
     acc[cur.iconType].push({
       name: cur.iconName,
-      icon: <div>{cur.iconName}</div>,
+      icon: cur.iconName,
       style: cur.style
     });
     if (cur.iconType === 'new') {
