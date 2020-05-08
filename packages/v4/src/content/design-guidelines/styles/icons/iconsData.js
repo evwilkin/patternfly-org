@@ -46,7 +46,7 @@ export const iconsData = [
     "Name": "ansible",
     "React_name": "AnsibeTowerIcon",
     "Type": "Brand",
-    "Contextual_usage": "Represents \"Asible Tower\""
+    "Contextual_usage": "Represents \"Ansible Tower\""
   },
   {
     "Style": "fas",
