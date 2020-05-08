@@ -45,7 +45,6 @@ export class IconsTable extends React.Component {
   };
 
   onSort = (_event, index, direction) => {
-    console.log(_event, index, direction);
     this.setState({
       sortBy: {
         index,
@@ -75,9 +74,10 @@ export class IconsTable extends React.Component {
     const { searchValue, columns, sortBy } = this.state;
     const { direction, index } = sortBy;
     const searchRE = new RegExp(searchValue, 'i');
-    const iconRows = iconsData.map(({Style, Name, React_name: ReactName, Type, Contextual_usage}) => {
+    const iconRows = iconsData
+      .filter(({ React_name: ReactName }) => icons[ReactName])
+      .map(({Style, Name, React_name: ReactName, Type, Contextual_usage}) => {
       const Icon = icons[ReactName] ? icons[ReactName] : undefined;
-      console.log(Icon);
       return {
         cells: [
           {
