@@ -15,12 +15,12 @@ export const IconRecommendations = () => {
       const cellObj = {
         title: [],
         key: `${columnName}-${idx}`
-      };
+      }; 
       rowObj[columnName].map((cellLine, index) => {
         const { style, icon, name } = cellLine;
         (columnName === 'iconUsage')
           ? cellObj.title = cellLine
-          : cellObj.title.push(<div><i className={`${style} ${name}`}></i>{icon}</div>);
+          : cellObj.title.push(<div key={`${name}-${index}`}><i className={`${style} ${name}`}></i>{icon}</div>);
           return null;
       })
       return cellObj;
@@ -33,7 +33,7 @@ export const IconRecommendations = () => {
     aria-label="Updated icons table"
     cells={columns}
     rows={rows}
-    variant={TableVariant.compact}
+    // variant={TableVariant.compact}
     id="ws-icons-recommendations"
     >
       <TableHeader />

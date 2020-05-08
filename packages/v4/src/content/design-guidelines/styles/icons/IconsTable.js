@@ -11,9 +11,7 @@ import {
   TooltipPosition
 } from '@patternfly/react-core';
 import * as icons from '@patternfly/react-icons';
-import paramCase from 'param-case';
 import './icons.css';
-import coreIcons from '@patternfly/patternfly/icons/pf-icons';
 import {
   Table,
   TableHeader,
@@ -24,21 +22,6 @@ import {
 } from '@patternfly/react-table';
 import { iconsData } from './iconsData';
 import { saveAs } from 'file-saver';
-
-const allIcons = Object.entries(icons).filter(([name]) => name.endsWith('Icon'));
-let commonIcons = allIcons.filter(([name]) => {
-  const hyphenName = paramCase(name.slice(0, -4));
-  return Boolean(coreIcons[hyphenName]);
-});
-
-commonIcons = commonIcons.sort((a , b) => {
-  return a[0] > b[0] ? 1 : -1;
-});
-
-// const reactOnlyIcons = allIcons.filter(([name]) => {
-//   const hyphenName = paramCase(name.slice(0, -4));
-//   return !coreIcons[hyphenName];
-// });
 
 export class IconsTable extends React.Component {
   state = {
@@ -92,45 +75,21 @@ export class IconsTable extends React.Component {
     const { searchValue, columns, sortBy } = this.state;
     const { direction, index } = sortBy;
     const searchRE = new RegExp(searchValue, 'i');
-    const iconRows = commonIcons.map(([id, Icon]) => {
-      const name = paramCase(id.slice(0, -4));
-      const style = iconsData[id]
-        ? iconsData[id].style
-        : '';
-      const type = iconsData[id]
-        ? iconsData[id].type
-        : '';
-      const usage = iconsData[id]
-        ? iconsData[id].usage
-        : '';
+    const iconRows = iconsData.map(({Style, Name, React_name: ReactName, Type, Contextual_usage}) => {
+      const Icon = icons[ReactName] ? icons[ReactName] : undefined;
+      console.log(Icon);
       return {
         cells: [
           {
-            title: (
-              <Tooltip content="Download SVG" position={TooltipPosition.bottom}>
-                <Icon onClick={this.onDownloadSvg} />
-              </Tooltip>
-            ),
-            props: { column: 'Icon'}
+            title: Icon ? <Tooltip content="Download SVG" position={TooltipPosition.bottom}><Icon onClick={this.onDownloadSvg} /></Tooltip> : ReactName,
+            props: { column: 'Icon' }
           },
+          Name,
+          Style,
+          Type,
+          ReactName,
           {
-            title: ( name ),
-            props: { column: 'Name' }
-          },
-          {
-            title: ( style ),
-            props: { column: 'Style'}
-          },
-          {
-            title: ( type ),
-            props: { column: 'Type' }
-          },
-          {
-            title: ( id ),
-            props: { column: 'React'}
-          },
-          {
-            title: ( usage ),
+            title: Contextual_usage,
             props: { column: 'Contextual usage' }
           }
         ]
@@ -160,7 +119,7 @@ export class IconsTable extends React.Component {
               type="text"
               id="primaryIconsSearch"
               name="primaryIconsSearch"
-              placeholder="Search Icons"
+              placeholder="Search for any icon, attribute, or usage guideline"
               aria-label="Search Icons"
               value={searchValue}
               onChange={this.handleSearchChange}
