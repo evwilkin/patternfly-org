@@ -6,6 +6,7 @@ import {
   TableBody,
   // TableVariant
 } from '@patternfly/react-table';
+import * as icons from '@patternfly/react-icons';
 
 export const IconRecommendations = () => {
   const columns = ['Old icon', 'Updated icon', 'Updated contextual usage'];
@@ -17,10 +18,11 @@ export const IconRecommendations = () => {
         key: `${columnName}-${idx}`
       }; 
       rowObj[columnName].map((cellLine, index) => {
-        const { style, icon, name } = cellLine;
+        const { style, icon, name, reactIcon } = cellLine;
+        const Icon = icons[reactIcon];
         (columnName === 'iconUsage')
           ? cellObj.title = cellLine
-          : cellObj.title.push(<div key={`${name}-${index}`}><i className={`${style} ${icon.includes('pf-icon-') ? 'pf-icon' : ''} ${name}`}></i>{icon}</div>);
+          : cellObj.title.push(<div key={`${name}-${index}`}><span className="ws-recommendations-icon">{Icon && <Icon />}</span>{icon}</div>);
           return null;
       })
       return cellObj;

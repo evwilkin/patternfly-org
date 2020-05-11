@@ -6,7 +6,7 @@
   vertical-align: top;
 }
 
-#ws-icons-recommendations i {
+#ws-icons-recommendations .ws-recommendations-icon {
   width: 24px;
   display: inline-block;
   padding-right: 8px;

@@ -1324,7 +1324,8 @@ export const iconRecommendations = recommendationsArray.map(recGroup => (
     acc[cur.iconType].push({
       name: cur.iconName,
       icon: cur.iconName,
-      style: cur.style
+      style: cur.style,
+      reactIcon: cur.reactIcon
     });
     if (cur.iconType === 'new') {
       acc['iconUsage'].push(<div>{cur.iconUsage}</div>);

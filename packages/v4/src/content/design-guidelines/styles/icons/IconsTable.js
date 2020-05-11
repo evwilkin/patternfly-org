@@ -154,7 +154,7 @@ export class IconsTable extends React.Component {
           </EmptyState>
         )}
 
-        {Object.entries(icons)
+        {/* {Object.entries(icons)
         .filter(([name]) => name.endsWith('Icon'))
         .map(([id, Icon]) => {
           const MyIcon = Icon;
@@ -165,7 +165,7 @@ export class IconsTable extends React.Component {
               <MyIcon />
             </>
           );
-        })}
+        })} */}
       </React.Fragment>
     );
   }
