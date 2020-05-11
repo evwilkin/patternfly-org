@@ -2,11 +2,12 @@
 title: Icons
 section: styles
 ---
-import { Button, Divider, Grid, GridItem } from '@patternfly/react-core';
+import { Button, Card, CardBody, Divider, Dropdown, DropdownToggle, Grid, GridItem } from '@patternfly/react-core';
 import { CheckCircleIcon, TimesCircleIcon, FilterIcon } from '@patternfly/react-icons';
 import { Icons } from 'gatsby-theme-patternfly-org/components/icons/icons';
 import { IconRecommendations } from './IconRecommendations';
 import { IconsTable } from './IconsTable';
+import { IconsDropdown } from './iconsComponents';
 import './icons.css';
 
 <Divider className="ws-icons-divider" />
@@ -56,7 +57,12 @@ import './icons.css';
     </Grid>
   </GridItem>
   <GridItem xl={6} lg={12}>
-    <img width="480px" src="patternfly-icon-sizes.png" alt="PatternFly icon sizes" />
+    <Card>
+      <CardBody>
+        <p>Small icons</p>
+        <IconsDropdown />
+      </CardBody>
+    </Card>
   </GridItem>
 </Grid>
 
@@ -68,9 +74,9 @@ import './icons.css';
 <Divider className="ws-icons-divider" />
 
 ## All icons
-<p>PatternFly uses custom icons and selections from [FontAwesome](https://fontawesome.com/icons). PatternFly icons are two dimensional and flat. Navigate to FontAwesome’s website to download SVGs of any ‘fa’ icons. Click on any single pf-icon in the table to download it as an SVG. Download all icon SVGs [here](#).</p>
+<p>PatternFly uses custom icons and selections from <a href="https://fontawesome.com/icons">FontAwesome</a>. PatternFly icons are two dimensional and flat. Navigate to FontAwesome’s website to download SVGs of any ‘fa’ icons. Click on any single pf-icon in the table to download it as an SVG. Download all icon SVGs <a href="#">here</a>.</p>
 
-<p>If you’re a designer, these icons are the same set as the ones in the [PatternFly Sketch Design Kit](https://www.patternfly.org/v4/get-started/designers). It is possible to use any FontAwesome icon as long it follows the guidelines above.</p>
+<p>If you’re a designer, these icons are the same set as the ones in the <a href="https://www.patternfly.org/v4/get-started/designers">PatternFly Sketch Design Kit</a>. It is possible to use any FontAwesome icon as long it follows the guidelines above.</p>
 
 <p>If you’re looking to copy HTML for an icon:</p>
 <p>Use this for 'pficon' icons: <code>&lt;i className="pf-icon [insert-icon-name]"&gt;&lt;/i&gt;</code></p>

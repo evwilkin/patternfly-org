@@ -7,6 +7,8 @@ import {
   // TableVariant
 } from '@patternfly/react-table';
 import * as icons from '@patternfly/react-icons';
+import { css } from '@patternfly/react-styles';
+import styles from '@patternfly/react-styles/css/components/Table/table';
 
 export const IconRecommendations = () => {
   const columns = ['Old icon', 'Updated icon', 'Updated contextual usage'];
@@ -18,11 +20,11 @@ export const IconRecommendations = () => {
         key: `${columnName}-${idx}`
       }; 
       rowObj[columnName].map((cellLine, index) => {
-        const { style, icon, name, reactIcon } = cellLine;
+        const { icon, name, reactIcon } = cellLine;
         const Icon = icons[reactIcon];
         (columnName === 'iconUsage')
           ? cellObj.title = cellLine
-          : cellObj.title.push(<div key={`${name}-${index}`}><span className="ws-recommendations-icon">{Icon && <Icon />}</span>{icon}</div>);
+          : cellObj.title.push(<div className={`${css(styles.modifiers.fitContent)} ws-recommendations-entry`} key={`${name}-${index}`}><span className="ws-recommendations-icon">{Icon && <Icon />}</span>{icon}</div>);
           return null;
       })
       return cellObj;
@@ -32,11 +34,11 @@ export const IconRecommendations = () => {
 
   return (
     <Table
-    aria-label="Updated icons table"
-    cells={columns}
-    rows={rows}
-    // variant={TableVariant.compact}
-    id="ws-icons-recommendations"
+      aria-label="Updated icons table"
+      cells={columns}
+      rows={rows}
+      className="ws-icons-recommendations"
+      // variant={TableVariant.compact}
     >
       <TableHeader />
       <TableBody />

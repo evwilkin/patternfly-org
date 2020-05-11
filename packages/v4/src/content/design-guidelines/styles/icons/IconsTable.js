@@ -7,6 +7,9 @@ import {
   EmptyStateVariant, 
   EmptyStateIcon, 
   EmptyStateBody,
+  Flex,
+  FlexItem,
+  FlexModifiers,
   Tooltip,
   TooltipPosition
 } from '@patternfly/react-core';
@@ -114,19 +117,24 @@ export class IconsTable extends React.Component {
     return (
       <React.Fragment>
         <div>
-          <Form className="ws-content-search-icons" onSubmit={event => { event.preventDefault(); return false; }}>
-            <TextInput
-              type="text"
-              id="primaryIconsSearch"
-              name="primaryIconsSearch"
-              placeholder="Search for any icon, attribute, or usage guideline"
-              aria-label="Search Icons"
-              value={searchValue}
-              onChange={this.handleSearchChange}
-            />
-          </Form>
-
-          {filteredRows.length} items
+          <Flex breakpointMods={[{modifier: FlexModifiers["justify-content-space-between"]}, {modifier: FlexModifiers.grow}]}>
+            <FlexItem breakpointMods={[{modifier: FlexModifiers.shrink}]}>
+              <Form className="ws-content-search-icons" onSubmit={event => { event.preventDefault(); return false; }}>
+                <TextInput
+                  type="text"
+                  id="primaryIconsSearch"
+                  name="primaryIconsSearch"
+                  placeholder="Search for any icon, attribute, or usage guideline"
+                  aria-label="Search Icons"
+                  value={searchValue}
+                  onChange={this.handleSearchChange}
+                />
+              </Form>
+            </FlexItem>
+            <FlexItem>
+              {filteredRows.length} items
+            </FlexItem>
+          </Flex>
         </div>
 
         <Table
@@ -137,6 +145,7 @@ export class IconsTable extends React.Component {
           rows={filteredRows}
           variant={TableVariant.compact}
           id="ws-icons-table"
+          caption={`${filteredRows.length} items`}
         >
           <TableHeader />
           <TableBody />
@@ -153,19 +162,6 @@ export class IconsTable extends React.Component {
             </EmptyStateBody>
           </EmptyState>
         )}
-
-        {/* {Object.entries(icons)
-        .filter(([name]) => name.endsWith('Icon'))
-        .map(([id, Icon]) => {
-          const MyIcon = Icon;
-          // console.log(id, MyIcon);
-          return (
-            <>
-              <h1>{id}</h1>
-              <MyIcon />
-            </>
-          );
-        })} */}
       </React.Fragment>
     );
   }
