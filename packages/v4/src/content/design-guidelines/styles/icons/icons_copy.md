@@ -2,12 +2,11 @@
 title: Icons
 section: styles
 ---
-import { Button, Card, CardBody, Divider, Dropdown, DropdownToggle, Grid, GridItem } from '@patternfly/react-core';
-import { CheckCircleIcon, TimesCircleIcon, FilterIcon } from '@patternfly/react-icons';
+import { Alert, Button, Card, CardBody, Divider, Dropdown, DropdownToggle, EmptyState, EmptyStateIcon, Grid, GridItem, SimpleList, SimpleListItem, SimpleListGroup, Title } from '@patternfly/react-core';
+import { CaretDownIcon, CheckCircleIcon, TimesCircleIcon, FilterIcon, StarIcon } from '@patternfly/react-icons';
 import { Icons } from 'gatsby-theme-patternfly-org/components/icons/icons';
 import { IconRecommendations } from './IconRecommendations';
 import { IconsTable } from './IconsTable';
-import { IconsDropdown } from './iconsComponents';
 import './icons.css';
 
 <Divider className="ws-icons-divider" />
@@ -57,10 +56,53 @@ import './icons.css';
     </Grid>
   </GridItem>
   <GridItem xl={6} lg={12}>
-    <Card>
+    <Card className="ws-icon-size-examples">
       <CardBody>
-        <p>Small icons</p>
-        <IconsDropdown />
+        <Grid>
+          <GridItem span={12}>
+            <p>Small icons</p>
+          </GridItem>
+          <GridItem span={4}>
+            <Dropdown
+              toggle={<DropdownToggle id="toggle-id" iconComponent={CaretDownIcon}>Dropdown</DropdownToggle>}
+            />
+          </GridItem>
+          <GridItem span={8}>
+            <Card>
+              <CardBody>
+                <SimpleList>
+                  <SimpleListGroup title="Favorites">
+                    <SimpleListItem>OpenShift <StarIcon /></SimpleListItem>
+                    <SimpleListItem>Github <StarIcon /></SimpleListItem>
+                  </SimpleListGroup>
+                </SimpleList>
+              </CardBody>
+            </Card>
+          </GridItem>
+          <GridItem span={12}>
+            <p>Medium icons</p>
+          </GridItem>
+          <GridItem span={12}>
+            <Alert variant="default" isInline title="Default inline alert title"/>
+          </GridItem>
+          <GridItem span={12}>
+            <p>Large icons</p>
+          </GridItem>
+          <GridItem span={12}>
+            <Alert variant="success" title="Success alert title 4" />
+          </GridItem>
+          <GridItem span={12}>
+            <p>X-large icons</p>
+          </GridItem>
+          <GridItem span={12}>
+            <EmptyState variant={EmptyStateVariant.xl}>
+              <EmptyStateIcon icon={CubesIcon} />
+              <Title headingLevel="h5" size="4xl">
+                This is a large empty state
+              </Title>
+            </EmptyState>
+          </GridItem>
+        </Grid>
       </CardBody>
     </Card>
   </GridItem>

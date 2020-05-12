@@ -1272,7 +1272,7 @@ const recommendationsArray = [
       type: "",
       iconUsage: "Indicates the ability to drag/drop an item",
       iconType: "old",
-      reactIcon: "PficonDragDropIcon"
+      reactIcon: "PficonDragdropIcon"
     },
     {
       style: "fas",

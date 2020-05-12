@@ -1,15 +1,18 @@
 import React from 'react';
 import {
-  Form, 
+  Divider,
+  InputGroup,
   TextInput, 
   Title, 
+  Button,
+  ButtonVariant,
+  DataToolbar,
+  DataToolbarContent,
+  DataToolbarItem,
   EmptyState, 
   EmptyStateVariant, 
   EmptyStateIcon, 
   EmptyStateBody,
-  Flex,
-  FlexItem,
-  FlexModifiers,
   Tooltip,
   TooltipPosition
 } from '@patternfly/react-core';
@@ -76,6 +79,7 @@ export class IconsTable extends React.Component {
   render() {
     const { searchValue, columns, sortBy } = this.state;
     const { direction, index } = sortBy;
+    const SearchIcon = icons.SearchIcon;
     const searchRE = new RegExp(searchValue, 'i');
     const iconRows = iconsData
       .filter(({ React_name: ReactName }) => icons[ReactName])
@@ -116,27 +120,29 @@ export class IconsTable extends React.Component {
     
     return (
       <React.Fragment>
-        <div>
-          <Flex breakpointMods={[{modifier: FlexModifiers["justify-content-space-between"]}, {modifier: FlexModifiers.grow}]}>
-            <FlexItem breakpointMods={[{modifier: FlexModifiers.shrink}]}>
-              <Form className="ws-content-search-icons" onSubmit={event => { event.preventDefault(); return false; }}>
+        <DataToolbar id="data-toolbar">
+          <DataToolbarContent>
+            <DataToolbarItem>
+              <InputGroup>
                 <TextInput
-                  type="text"
-                  id="primaryIconsSearch"
-                  name="primaryIconsSearch"
+                  name="iconsSearch"
+                  id="iconsSearch" type="search"
+                  aria-label="Search icons"
                   placeholder="Search for any icon, attribute, or usage guideline"
-                  aria-label="Search Icons"
                   value={searchValue}
                   onChange={this.handleSearchChange}
                 />
-              </Form>
-            </FlexItem>
-            <FlexItem>
-              {filteredRows.length} items
-            </FlexItem>
-          </Flex>
-        </div>
-
+                <Button variant={ButtonVariant.control} aria-label="search button for search input">
+                  <SearchIcon />
+                </Button>
+              </InputGroup>
+            </DataToolbarItem>
+            <DataToolbarItem breakpointMods={[{modifier:"align-right"}]}>
+              <b>{filteredRows.length} items</b>
+            </DataToolbarItem>
+          </DataToolbarContent>
+        </DataToolbar>
+        <Divider />
         <Table
           aria-label="Sortable Table"
           sortBy={sortBy}
@@ -145,7 +151,6 @@ export class IconsTable extends React.Component {
           rows={filteredRows}
           variant={TableVariant.compact}
           id="ws-icons-table"
-          caption={`${filteredRows.length} items`}
         >
           <TableHeader />
           <TableBody />

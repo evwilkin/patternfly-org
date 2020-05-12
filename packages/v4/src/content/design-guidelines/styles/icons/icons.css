@@ -15,3 +15,29 @@
   display: inline-block;
   margin-right: 8px;
 }
+
+#icon-sizes,
+#icon-colors,
+#all-icons,
+#updated-icon-recommendations {
+  margin-bottom: 24px;
+}
+
+#ws-icons-table td[column="Icon"] svg {
+  cursor: pointer;
+}
+
+#all-icons ~ .ws-p > .ws-code {
+  margin-left: 8px;
+}
+
+.ws-icon-size-examples .ws-p {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+@media screen and (min-width: 992px) {
+  #iconsSearch {
+    width: 400px;
+  }
+}
