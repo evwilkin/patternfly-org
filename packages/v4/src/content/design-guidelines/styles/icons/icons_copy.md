@@ -2,7 +2,7 @@
 title: Icons
 section: styles
 ---
-import { Alert, Button, Card, CardBody, Divider, Dropdown, DropdownToggle, EmptyState, EmptyStateIcon, Grid, GridItem, SimpleList, SimpleListItem, SimpleListGroup, Title } from '@patternfly/react-core';
+import { Alert, Button, Card, CardBody, Divider, Dropdown, DropdownToggle, EmptyState, EmptyStateIcon, Flex, FlexItem, FlexModifiers, Grid, GridItem, SimpleList, SimpleListItem, SimpleListGroup, Title } from '@patternfly/react-core';
 import { CaretDownIcon, CheckCircleIcon, TimesCircleIcon, FilterIcon, StarIcon } from '@patternfly/react-icons';
 import { Icons } from 'gatsby-theme-patternfly-org/components/icons/icons';
 import { IconRecommendations } from './IconRecommendations';
@@ -11,7 +11,7 @@ import './icons.css';
 
 <Divider className="ws-icons-divider" />
 
-<p class="ws-icons-page">If you're a developer, <a href="/get-started/developers#using-styles">check out our getting started page</a> to learn more about how to get and use our icon set.</p>
+<p class="ws-icons-page">If you're a developer, check out our <a href="/get-started/developers#using-styles">getting started</a> page to learn more about how to get and use our icon set.</p>
 
 ## Icon sizes
 <Grid gutter="md">
@@ -23,44 +23,53 @@ import './icons.css';
     <Button variant="link" icon={<FilterIcon size="sm" />}></Button>
     <Button variant="link" icon={<FilterIcon size="md" />}></Button>
     <Button variant="link" icon={<FilterIcon size="lg" />}></Button>
+     <FilterIcon size="sm" />
+    <FilterIcon size="md" />
+    <FilterIcon size="lg" />
     <p>Medium icons are used as our base size across our system as a whole and we recommend using this base size within your applications. Small, large and x-large icons are used sparingly across PatternFly components. Here is a full complete list of icon sizes:</p>
-    <Grid gutter="md">
-      <GridItem sm={2}><FilterIcon size="sm" /></GridItem>
-      <GridItem sm={10}>
-        <Grid>
-          <GridItem>Small (10px)</GridItem>
-          <GridItem><code>-pf-global-icon-FonSize-sm</code></GridItem>
-        </Grid>
-      </GridItem>
-      <GridItem sm={2}><FilterIcon size="md" /></GridItem>
-      <GridItem sm={10}>
-        <Grid>
-          <GridItem>Medium (18px)</GridItem>
-          <GridItem><code>-pf-global-icon-FonSize-md</code></GridItem>
-        </Grid>
-      </GridItem>
-      <GridItem sm={2}><FilterIcon size="lg" /></GridItem>
-      <GridItem sm={10}>
-        <Grid>
-          <GridItem>Large (24px)</GridItem>
-          <GridItem><code>-pf-global-icon-FonSize-lg</code></GridItem>
-        </Grid>
-      </GridItem>
-      <GridItem sm={2}><FilterIcon size="xl" /></GridItem>
-      <GridItem sm={10}>
-        <Grid>
-          <GridItem>X-large (54px)</GridItem>
-          <GridItem><code>-pf-global-icon-FonSize-xl</code></GridItem>
-        </Grid>
-      </GridItem>
-    </Grid>
+    <Flex className="ws-icon-sizes ws-icon-sizes-sm" breakpointMods={[{modifier: FlexModifiers['align-items-flex-start']}]}>
+      <FlexItem className="ws-icon-size">
+        <FilterIcon size="sm" />
+      </FlexItem>
+      <FlexItem>
+        <p>Small (10px)</p>
+        <code>-pf-global-icon-FonSize-sm</code>
+      </FlexItem>
+    </Flex>
+    <Flex className="ws-icon-sizes ws-icon-sizes-md" breakpointMods={[{modifier: FlexModifiers['align-items-flex-start']}]}>
+      <FlexItem className="ws-icon-size">
+        <FilterIcon size="md" />
+      </FlexItem>
+      <FlexItem>
+        <p>Medium (18px)</p>
+        <code>-pf-global-icon-FonSize-md</code>
+      </FlexItem>
+    </Flex>
+    <Flex className="ws-icon-sizes ws-icon-sizes-lg" breakpointMods={[{modifier: FlexModifiers['align-items-flex-start']}]}>
+      <FlexItem className="ws-icon-size">
+        <FilterIcon size="lg" />
+      </FlexItem>
+      <FlexItem>
+        <p>Large (24px)</p>
+        <code>-pf-global-icon-FonSize-lg</code>
+      </FlexItem>
+    </Flex>
+    <Flex className="ws-icon-sizes ws-icon-sizes-xl" breakpointMods={[{modifier: FlexModifiers['align-items-flex-start']}]}>
+      <FlexItem className="ws-icon-size">
+        <FilterIcon size="xl" />
+      </FlexItem>
+      <FlexItem>
+        <p>X-large (54px)</p>
+        <code>-pf-global-icon-FonSize-xl</code>
+      </FlexItem>
+    </Flex>
   </GridItem>
   <GridItem xl={6} lg={12}>
     <Card className="ws-icon-size-examples">
       <CardBody>
         <Grid>
           <GridItem span={12}>
-            <p>Small icons</p>
+            <p><b>Small icons</b></p>
           </GridItem>
           <GridItem span={4}>
             <Dropdown
@@ -80,24 +89,24 @@ import './icons.css';
             </Card>
           </GridItem>
           <GridItem span={12}>
-            <p>Medium icons</p>
+            <p><b>Medium icons</b></p>
           </GridItem>
           <GridItem span={12}>
             <Alert variant="default" isInline title="Default inline alert title"/>
           </GridItem>
           <GridItem span={12}>
-            <p>Large icons</p>
+            <p><b>Large icons</b></p>
           </GridItem>
           <GridItem span={12}>
             <Alert variant="success" title="Success alert title 4" />
           </GridItem>
           <GridItem span={12}>
-            <p>X-large icons</p>
+            <p><b>X-large icons</b></p>
           </GridItem>
           <GridItem span={12}>
-            <EmptyState variant={EmptyStateVariant.xl}>
+            <EmptyState variant={EmptyStateVariant.lg}>
               <EmptyStateIcon icon={CubesIcon} />
-              <Title headingLevel="h5" size="4xl">
+              <Title headingLevel="h5" size="xl">
                 This is a large empty state
               </Title>
             </EmptyState>

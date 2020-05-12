@@ -31,6 +31,25 @@
   margin-left: 8px;
 }
 
+.ws-icons-gridtext .ws-icon-sizes-sm {
+  margin-top: 24px;
+}
+
+.ws-icons-gridtext .ws-icon-sizes .ws-p {
+  margin-bottom: 8px;
+}
+
+.ws-icons-gridtext .ws-icon-sizes .ws-icon-size {
+  width: 54px;
+  margin-right: 24px;
+  text-align: center;
+}
+
+.ws-icon-size-examples .pf-c-card__body:first-child {
+  padding: 16px;
+  padding-top: 8px;
+}
+
 .ws-icon-size-examples .ws-p {
   margin-top: 16px;
   margin-bottom: 8px;
