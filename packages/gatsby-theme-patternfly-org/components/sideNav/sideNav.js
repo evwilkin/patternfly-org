@@ -50,6 +50,7 @@ export const SideNav = ({
   }, {});
 
   const sideNavItems = sideNavContexts[context.replace(/-/g, '_')] || [];
+  console.log('sideNavItems', sideNavItems)
 
   // TODO: Get a better design and get rid of this thing.
   const contextSwitcher = pageSource === 'org'
@@ -108,6 +109,17 @@ export const SideNav = ({
               >
                 {allNavItems[section]
                   .filter(node => node.source === context || node.source === 'shared')
+                  .sort((a,b) => {
+                    return a.text < b.text ? -1 : 1;
+                  })
+                  .sort((a, b) => {
+                    const { subItems } = sideNavItems.find(a => a.section === section);
+                    if (subItems) {
+                      const subItemA = subItems.find(item => item.title === a.text) || 100;
+                      const subItemB = subItems.find(item => item.title === b.text) || 100;
+                      return subItemA.index - subItemB.index;
+                    }
+                  })
                   .map(renderNavItem)}
               </NavExpandable>
             );

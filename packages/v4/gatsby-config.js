@@ -39,7 +39,16 @@ module.exports = {
         showFooter: true, // Footer
         sideNav: {
           core: [
-            { section: 'overview' },
+            {
+              section: 'overview',
+              subItems: [
+                {
+                  // Title: index, default index is 100
+                  title: 'Release notes',
+                  index: 0
+                }
+              ]
+            },
             { section: 'components' },
             { section: 'layouts' },
             { section: 'utilities' },
@@ -67,7 +76,56 @@ module.exports = {
           design_guidelines: [
             { section: 'styles' },
             { section: 'usage and behavior' },
-            { section: 'content' }
+            { 
+              section: 'content',
+              subItems: [
+                {
+                  // Title: index, default index is 100
+                  title: 'Welcome',
+                  index: 0
+                },
+                {
+                  title: 'Brand voice and tone',
+                  index: 5
+                },
+                {
+                  title: 'UX writing best practices',
+                  index: 10
+                },
+                {
+                  title: 'Terminology',
+                  index: 15
+                },
+                {
+                  title: 'Numerics',
+                  index: 20
+                },
+                {
+                  title: 'Punctuation',
+                  index: 25
+                },
+                {
+                  title: 'Truncation',
+                  index: 30
+                },
+                {
+                  title: 'Capitalization',
+                  index: 35
+                },
+                {
+                  title: 'Sentence structure',
+                  index: 40
+                },
+                {
+                  title: 'Writing for all audiences',
+                  index: 45
+                },
+                {
+                  title: 'UI areas',
+                  index: 50
+                }
+              ]
+            }
           ],
         },
         topNavItems: [
