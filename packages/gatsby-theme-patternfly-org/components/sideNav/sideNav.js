@@ -115,8 +115,8 @@ export const SideNav = ({
                   .sort((a, b) => {
                     const { subItems } = sideNavItems.find(a => a.section === section);
                     if (subItems) {
-                      const subItemA = subItems.find(item => item.title === a.text) || 100;
-                      const subItemB = subItems.find(item => item.title === b.text) || 100;
+                      const subItemA = subItems.find(item => item.title === a.text) || {index: 100};
+                      const subItemB = subItems.find(item => item.title === b.text) || {index: 100};
                       return subItemA.index - subItemB.index;
                     }
                   })
