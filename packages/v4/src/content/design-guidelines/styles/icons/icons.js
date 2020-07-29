@@ -776,6 +776,13 @@ export const iconsData = [
     "Type": "Status",
     "Contextual_usage": "Represents an item is asleep or in power suspended mode"
   },
+  // {
+  //   "Style": "pf-icon",
+  //   "Name": "pf-icon-attention-bell",
+  //   "React_name": "AttentionBellIcon",
+  //   "Type": "Status",
+  //   "Contextual_usage": "Represents status: attention. Exclusively used in the notification badge component within the masthead."
+  // },
   {
     "Style": "pf-icon",
     "Name": "pf-icon-automation",
@@ -1195,5 +1202,12 @@ export const iconsData = [
     "React_name": "ZoneIcon",
     "Type": "Object",
     "Contextual_usage": "Represents a zone; a grouping of servers based on geographic location, network location, or function"
+  },
+  {
+    "Style": "pf-icon",
+    "Name": "pf-icon-attention-bell",
+    "React_name": "AttentionBellIcon",
+    "Type": "Object",
+    "Contextual_usage": "An angry bell"
   }
 ]
