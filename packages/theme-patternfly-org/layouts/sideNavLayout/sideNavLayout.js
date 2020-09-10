@@ -17,6 +17,7 @@ import {
 import { SearchIcon, ExternalLinkAltIcon, TimesIcon } from '@patternfly/react-icons';
 import { SideNav, TopNav, GdprBanner } from '../../components';
 import ConfigContext from '../../helpers/configContext';
+import { FocusTrap } from '@patternfly/react-core';
 import staticVersions from '../../versions.json';
 import logo from '../logo.svg';
 import './sideNavLayout.css';
@@ -45,20 +46,27 @@ const HeaderTools = ({
       }
     />
   );
+  const { algolia } = useContext(ConfigContext);
+
+  useEffect(() => {
+    if (algolia) {
+      attachDocSearch(algolia, 1000);
+    }
+  });
 
   return (
     <PageHeaderTools>
       {hasSearch && (
         <PageHeaderToolsItem className={`ws-global-search ${isSearchExpanded ? '' : 'ws-hide-search-input'}`}>
-          <TextInput id="global-search-input"  placeholder="Search" />
           {isSearchExpanded
             ? (
-              <React.Fragment>
+              <FocusTrap>
+                <TextInput id="global-search-input"  placeholder="Search" />
                 <SearchIcon className="global-search-icon" />
                 <Button variant="plain" className="ws-collapse-search" onClick={() => setSearchExpanded(false)}>
                   <TimesIcon />
                 </Button>
-              </React.Fragment>
+              </FocusTrap>
             ) : (
               <Button variant="plain" onClick={expandAndFocusSearch}>
                 <SearchIcon className="global-search-icon" />
