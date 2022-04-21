@@ -36,11 +36,11 @@ const HeaderTools = ({
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isSearchExpanded, setSearchExpanded] = useState(false);
   const latestVersion = versions.Releases.find(version => version.latest);
-  const getDropdownItem = version => (
+  const getDropdownItem = (version, isLatest = false) => (
     <DropdownItem
       key={version.name}
       component={
-        <a href={version.latest ? '/v4' : `/${version.name}`}>
+        <a href={(version.latest || isLatest) ? '/v4' : `/${version.name}`}>
           {`Release ${version.name}`}
         </a>
       }
@@ -122,7 +122,7 @@ const HeaderTools = ({
             isOpen={isDropdownOpen}
             dropdownItems={[
               <DropdownGroup key="latest" label="Latest">
-                {getDropdownItem(latestVersion)}
+                {getDropdownItem(latestVersion, true)}
               </DropdownGroup>,
               <DropdownGroup key="Previous" label="Previous releases">
                 {Object.values(versions.Releases)
