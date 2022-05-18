@@ -7,6 +7,8 @@ import { MDXTemplate } from 'theme-patternfly-org/templates/mdx';
 import { routes, groupedRoutes, fullscreenRoutes, getAsyncComponent } from './routes';
 import { trackEvent } from './helpers';
 import 'client-styles';
+// debugger;
+console.log({routes, groupedRoutes, fullscreenRoutes});
 
 const AppRoute = ({ child, katacodaLayout, title, path }) => {
   const pathname = useLocation().pathname;
@@ -18,6 +20,7 @@ const AppRoute = ({ child, katacodaLayout, title, path }) => {
   }
   // Send 404 event if redirected to 404 page
   if (path === '/404' && pathname.split('/').pop() !== '404') {
+    console.log({pathname});
     trackEvent('404_redirect', 'redirect', pathname);
   }
   return (

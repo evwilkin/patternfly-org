@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageSection, Title, PageSectionVariants, BackToTop } from '@patternfly/react-core';
+import { PageSection, Title, PageSectionVariants, BackToTop, Sidebar, SidebarContent, SidebarPanel, debounce } from '@patternfly/react-core';
 import { css } from '@patternfly/react-styles';
 import ExternalLinkAltIcon from '@patternfly/react-icons/dist/esm/icons/external-link-alt-icon';
 import { Router, useLocation } from '@reach/router';
@@ -24,6 +24,18 @@ const MDXChildTemplate = ({
   } = Component.getPageData();
   const cssVarsTitle = cssPrefix.length > 0 && 'CSS variables';
   const propsTitle = propComponents.length > 0 && 'Props';
+  
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
+      setWindowWidth(window.innerWidth);
+    }, 1000)
+
+    window.addEventListener('resize', debouncedHandleResize)
+
+    return () => window.removeEventListener('resize', debouncedHandleResize);
+  }, []);
+
   if (propsTitle && !toc.find(item => item.text === propsTitle)) {
     toc.push({ text: propsTitle });
     toc.push(propComponents.map(propComponent => ({ text: propComponent.name })));
@@ -67,46 +79,52 @@ const MDXChildTemplate = ({
   );
   // Create dynamic component for @reach/router
   const ChildComponent = () => (
-    <div className="pf-u-display-flex ws-mdx-child-template">
-      {toc.length > 1 && (
-        <TableOfContents items={toc} />
-      )}
-      <div className={katacodaLayout? "ws-mdx-content-katacoda" : "ws-mdx-content"}>
-        <div className={katacodaLayout ? "" : "ws-mdx-content-content"}>
-          {InlineAlerts}
-          <Component />
-          {propsTitle && (
-            <React.Fragment>
-              <AutoLinkHeader size="h2" className="ws-h2" id="props">
-                {propsTitle}
-              </AutoLinkHeader>
-              {propComponents.map(component => (
-                <PropsTable
-                  key={component.name}
-                  title={component.name}
-                  rows={component.props}
-                  allPropComponents={propComponents}
-                />
-              ))}
-            </React.Fragment>
+    <>
+      <Sidebar isPanelRight className="ws-mdx-child-template" orientation={windowWidth < 1450 ? 'stack' : 'split'}>
+        <SidebarPanel variant="sticky" className="ws-sidebar__panel">
+          {toc.length > 1 && (
+            <TableOfContents items={toc} />
           )}
-          {cssVarsTitle && (
-            <React.Fragment>
-              <AutoLinkHeader size="h2" className="ws-h2" id="css-variables">
-                {cssVarsTitle}
-              </AutoLinkHeader>
-              <CSSVariables prefix={cssPrefix} />
-            </React.Fragment>
-          )}
-          {!katacodaLayout && sourceLink && (
-            <React.Fragment>
-              <br />
-              <a href={sourceLink} target="_blank" onClick={() => trackEvent('view_source_click', 'click_event', source.toUpperCase())}>View source on GitHub</a>
-            </React.Fragment>
-          )}
-        </div>
-      </div>
-    </div>
+        </SidebarPanel>
+        <SidebarContent className="ws-sidebar__content">
+          <div className={katacodaLayout? "ws-mdx-content-katacoda" : "ws-mdx-content"}>
+            <div className={katacodaLayout ? "" : "ws-mdx-content-content"}>
+              {InlineAlerts}
+              <Component />
+              {propsTitle && (
+                <React.Fragment>
+                  <AutoLinkHeader size="h2" className="ws-h2" id="props">
+                    {propsTitle}
+                  </AutoLinkHeader>
+                  {propComponents.map(component => (
+                    <PropsTable
+                      key={component.name}
+                      title={component.name}
+                      rows={component.props}
+                      allPropComponents={propComponents}
+                    />
+                  ))}
+                </React.Fragment>
+              )}
+              {cssVarsTitle && (
+                <React.Fragment>
+                  <AutoLinkHeader size="h2" className="ws-h2" id="css-variables">
+                    {cssVarsTitle}
+                  </AutoLinkHeader>
+                  <CSSVariables prefix={cssPrefix} />
+                </React.Fragment>
+              )}
+              {!katacodaLayout && sourceLink && (
+                <React.Fragment>
+                  <br />
+                  <a href={sourceLink} target="_blank" onClick={() => trackEvent('view_source_click', 'click_event', source.toUpperCase())}>View source on GitHub</a>
+                </React.Fragment>
+              )}
+            </div>
+          </div>
+        </SidebarContent>
+      </Sidebar>
+    </>
   );
   ChildComponent.displayName = `MDXChildTemplate${Component.displayName}`;
   return <ChildComponent key={source} path={source} default={index === 0} />;
